@@ -43,9 +43,9 @@ export class ProcessCsvService {
       const bankSlips = await this.prisma.bankSlip.findMany({
         where: {
           debtId: {
-            in: paginatedBankSlips.map(
-              (paginatedBankSlip) => paginatedBankSlip.debtId,
-            ),
+            in: paginatedBankSlips
+              ?.map((paginatedBankSlip) => paginatedBankSlip?.debtId)
+              .filter(Boolean),
           },
         },
         orderBy: {
@@ -54,9 +54,9 @@ export class ProcessCsvService {
       });
 
       const bankSlipsToCreate = paginatedBankSlips
-        .map((paginatedBankSlip) => {
-          const existingUuid = bankSlips.some(
-            (bankSlip) => bankSlip.debtId === paginatedBankSlip.debtId,
+        ?.map((paginatedBankSlip) => {
+          const existingUuid = bankSlips?.some(
+            (bankSlip) => bankSlip?.debtId === paginatedBankSlip?.debtId,
           );
 
           if (!existingUuid) return paginatedBankSlip;

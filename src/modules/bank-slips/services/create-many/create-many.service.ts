@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '@modules/prisma/services/prisma.service';
 import { EmailProvider, PDFProvider } from '@modules/shared/providers';
 import { CreateManyBankSlipParams } from './interfaces';
+import { Decimal } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class CreateManyBankSlipService {
@@ -15,6 +16,8 @@ export class CreateManyBankSlipService {
   ) {}
 
   async execute(bankSlipsToCreate: CreateManyBankSlipParams[]): Promise<void> {
+    if (!bankSlipsToCreate.length) return;
+
     for await (const bankSlipToCreate of bankSlipsToCreate) {
       try {
         const { debtId, debtDueDate, debtAmount, email, governmentId, name } =
@@ -25,7 +28,7 @@ export class CreateManyBankSlipService {
             name,
             governmentId: Number(governmentId),
             email,
-            debtAmount,
+            debtAmount: new Decimal(debtAmount),
             debtDueDate: new Date(debtDueDate),
             debtId,
           },

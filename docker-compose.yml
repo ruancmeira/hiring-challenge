@@ -17,6 +17,24 @@ services:
     cap_add:
       - SYS_NICE
 
+  # db-shadow:
+  #   image: mysql:8.0
+  #   container_name: hiring-challenge-shadow-db
+  #   restart: always
+  #   volumes:
+  #     - hiring-challenge-shadow-db-data:/var/lib/mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${SHADOW_DB_USER}
+  #     MYSQL_USER: ${SHADOW_DB_USER}
+  #     MYSQL_PASSWORD: ${SHADOW_DB_PASS}
+  #     MYSQL_DATABASE: ${SHADOW_DB_NAME}
+  #   ports:
+  #     - 9697:3306
+  #   depends_on:
+  #     - db
+  #   cap_add:
+  #     - SYS_NICE
+
   app:
     build:
       context: .
@@ -31,11 +49,14 @@ services:
       DB_NAME: ${DB_NAME}
       SWAGGER_URL: ${SWAGGER_URL}
       DATABASE_URL: mysql://root:${DB_PASS}@db:3306/${DB_NAME}
+      # SHADOW_DATABASE_URL: 'mysql://root:${DB_PASS}@db-shadow:9697/hiring-challenge-shadow-db'
     ports:
       - 3000:3000
     depends_on:
       - db
+      # - db-shadow
     entrypoint: ['sh', '-c', 'npx prisma migrate deploy && npm run start:prod']
 
 volumes:
   hiring-challenge-db-data:
+  # hiring-challenge-shadow-db-data:

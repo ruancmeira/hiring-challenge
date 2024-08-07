@@ -4,7 +4,7 @@ import { ProcessCsvService } from '@modules/bank-slips/services/process-csv/proc
 import { ProcessCsvDTO } from '@modules/bank-slips/dtos';
 import { BadRequestException } from '@nestjs/common';
 
-describe('BankSlipsController', () => {
+describe('BankSlipsController - [Unit Tests]', () => {
   let controller: BankSlipsController;
   let processCsvService: ProcessCsvService;
 

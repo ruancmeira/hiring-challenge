@@ -9,7 +9,7 @@ import {
   manyBankSlipsToCreateMock,
 } from './mocks';
 
-describe('CreateManyBankSlipService', () => {
+describe('CreateManyBankSlipService - [Unit Tests]', () => {
   let createManyBankSlipService: CreateManyBankSlipService;
   let prismaService: PrismaService;
   let pdfProvider: PDFProvider;

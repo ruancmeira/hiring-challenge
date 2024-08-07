@@ -15,7 +15,7 @@ import {
 } from '../create-many/mocks';
 import { BankSlip } from '@prisma/client';
 
-describe('ProcessCsvService', () => {
+describe('ProcessCsvService - [Unit Tests]', () => {
   let processCsvService: ProcessCsvService;
   let prismaService: PrismaService;
   let createManyBankSlipService: CreateManyBankSlipService;
